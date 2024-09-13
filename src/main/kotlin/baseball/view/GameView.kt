@@ -8,10 +8,9 @@ class GameView() {
 
     fun gameStartMsg() {
         println("숫자야구 게임을 시작합니다.")
-        println(gameModel.randomNumbers)
     }
 
-    private fun inputValue(): String {
+    fun inputValue(): String {
         print("숫자를 입력해주세요:")
         inputNumber = readln()
         return inputNumber
@@ -22,22 +21,14 @@ class GameView() {
         println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.")
     }
 
-    fun errorCheck(): Boolean {
-        inputNumber = inputValue()
-        if (inputNumber.toIntOrNull() == null || inputNumber.length != 3) {
-            throw IllegalArgumentException("3자리 숫자를 입력해주세요.")
-        }
-        return true
-    }
-
     fun gameRule() {
         val strikeCount = gameModel.strike(inputNumber)
         val ballCount = gameModel.ball(inputNumber, gameModel.randomNumbers)
         when {
             strikeCount != 0 && ballCount == 0 -> println("${strikeCount}스트라이크")
             strikeCount == 0 && ballCount != 0 -> println("${ballCount}볼")
-            strikeCount != 0 && ballCount != 0 -> println("${strikeCount}스트라이크 ${ballCount}볼")
-            else -> println("낫씽")
+            strikeCount != 0 && ballCount != 0 -> println("${ballCount}볼 ${strikeCount}스트라이크")
+            else -> println("낫싱")
         }
     }
 }
