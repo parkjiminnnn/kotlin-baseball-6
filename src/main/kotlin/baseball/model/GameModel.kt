@@ -8,12 +8,10 @@ class GameModel() {
     var randomNumbers = randomNumbers()
 
     private fun randomNumbers(): String {
-        val usedNumber = mutableSetOf<Int>()
         val stringBuilder = StringBuilder()
-        while (usedNumber.size < 3) {
+        while (stringBuilder.length < 3) {
             val randomNumber = Randoms.pickNumberInRange(1, 9)
-            if (!usedNumber.contains(randomNumber)) {
-                usedNumber.add(randomNumber)
+            if (!stringBuilder.contains(randomNumber.toString())) {
                 stringBuilder.append(randomNumber)
             }
         }
@@ -41,10 +39,16 @@ class GameModel() {
         return ballCount
     }
 
+    fun errorCheck(inputNumber: String): Boolean {
+        if (inputNumber.toIntOrNull() == null || inputNumber.length != 3) {
+            throw IllegalArgumentException()
+        }
+        return true
+    }
+
     fun endGameCheck(inputNumber: String): Boolean {
         return when (inputNumber) {
             "1" -> {
-                randomNumbers = randomNumbers()
                 true
             }
 
@@ -53,7 +57,7 @@ class GameModel() {
             }
 
             else -> {
-                throw Exception("1이나 2만 입력해주세요.")
+                throw Exception("1이나 2를 입력해주세요.")
             }
         }
     }
