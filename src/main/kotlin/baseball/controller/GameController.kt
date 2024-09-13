@@ -13,10 +13,10 @@ class GameController {
             gameView.gameRule()
             if (gameView.inputNumber == gameView.gameModel.randomNumbers) {
                 gameView.gameEndMsg()
-                val startOrEnd = readln()
-                if (gameModel.endGameCheck(startOrEnd)) {
+                val restartOrEnd = readln()
+                if (gameModel.endGameCheck(restartOrEnd)) {
                     gameView.gameModel.randomNumbers = gameModel.randomNumbers
-                    println(gameView.gameModel.randomNumbers)
+//                    println(gameView.gameModel.randomNumbers)
                 } else {
                     break
                 }
