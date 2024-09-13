@@ -6,8 +6,9 @@ class GameView() {
     var inputNumber = ""
     val gameModel = GameModel()
 
-    fun gameStart() {
+    fun gameStartMsg() {
         println("숫자야구 게임을 시작합니다.")
+        println(gameModel.randomNumbers)
     }
 
     private fun inputValue(): String {
@@ -16,45 +17,27 @@ class GameView() {
         return inputNumber
     }
 
-    fun gameEnd() {
-        println("3스트라이크 게임을 종료합니다.")
+    fun gameEndMsg() {
+        println("3개의 숫자를 모두 맞히셨습니다! 게임 종료")
+        println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.")
     }
 
-    fun inputError(): Boolean {
-        if (!inputValue().toInt().equals(Int) || inputValue().length != 3) {
-            return true
+    fun errorCheck(): Boolean {
+        inputNumber = inputValue()
+        if (inputNumber.toIntOrNull() == null || inputNumber.length != 3) {
+            throw IllegalArgumentException("3자리 숫자를 입력해주세요.")
         }
-        return false
+        return true
     }
 
     fun gameRule() {
-        inputValue()
-//        if (inputError()){
-//            throw IllegalArgumentException("3자리 숫자를 입력해주세요.")
-//        }
-        //println(gameModel.randomNumbers)
-        if (gameModel.strike(inputNumber) != 0) {
-            println(
-                "${gameModel.strike(inputNumber)}스트라이크 ${
-                    gameModel.ball(
-                        inputNumber,
-                        gameModel.randomNumbers
-                    )
-                }볼"
-            )
-        } else if (gameModel.ball(inputNumber, gameModel.randomNumbers) != 0) {
-            println(
-                "${gameModel.strike(inputNumber)}스트라이크 ${
-                    gameModel.ball(
-                        inputNumber,
-                        gameModel.randomNumbers
-                    )
-                }볼"
-            )
-        } else {
-            println("낫씽")
+        val strikeCount = gameModel.strike(inputNumber)
+        val ballCount = gameModel.ball(inputNumber, gameModel.randomNumbers)
+        when {
+            strikeCount != 0 && ballCount == 0 -> println("${strikeCount}스트라이크")
+            strikeCount == 0 && ballCount != 0 -> println("${ballCount}볼")
+            strikeCount != 0 && ballCount != 0 -> println("${strikeCount}스트라이크 ${ballCount}볼")
+            else -> println("낫씽")
         }
     }
 }
-
-

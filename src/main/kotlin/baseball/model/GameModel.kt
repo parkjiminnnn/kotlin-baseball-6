@@ -3,15 +3,19 @@ package baseball.model
 import camp.nextstep.edu.missionutils.Randoms
 
 class GameModel() {
-    private val stringBuilder = StringBuilder()
     private var strikeCount = 0
     private var ballCount = 0
-    val randomNumbers = randomNumbers()
+    var randomNumbers = randomNumbers()
 
     private fun randomNumbers(): String {
-        for (i in 0..2) {
+        val usedNumber = mutableSetOf<Int>()
+        val stringBuilder = StringBuilder()
+        while (usedNumber.size < 3) {
             val randomNumber = Randoms.pickNumberInRange(1, 9)
-            stringBuilder.append(randomNumber)
+            if (!usedNumber.contains(randomNumber)) {
+                usedNumber.add(randomNumber)
+                stringBuilder.append(randomNumber)
+            }
         }
         return stringBuilder.toString()
     }
@@ -19,7 +23,7 @@ class GameModel() {
     fun strike(inputNumber: String): Int {
         strikeCount = 0
         for (i in 0..2) {
-            if (inputNumber[i] == randomNumbers()[i]) {
+            if (inputNumber[i] == randomNumbers[i]) {
                 strikeCount++
             }
         }
@@ -35,5 +39,22 @@ class GameModel() {
             }
         }
         return ballCount
+    }
+
+    fun endGameCheck(inputNumber: String): Boolean {
+        return when (inputNumber) {
+            "1" -> {
+                randomNumbers = randomNumbers()
+                true
+            }
+
+            "2" -> {
+                false
+            }
+
+            else -> {
+                throw Exception("1이나 2만 입력해주세요.")
+            }
+        }
     }
 }

@@ -1,17 +1,25 @@
 package baseball.controller
 
+import baseball.model.GameModel
 import baseball.view.GameView
 
 
-class GameController() {
+class GameController {
     private val gameView = GameView()
+    private val gameModel = GameModel()
     fun playGame() {
-        gameView.gameStart()
-        while (true) {
+        gameView.gameStartMsg()
+        while (gameView.errorCheck()) {
             gameView.gameRule()
             if (gameView.inputNumber == gameView.gameModel.randomNumbers) {
-                gameView.gameEnd()
-                break
+                gameView.gameEndMsg()
+                val startOrEnd = readln()
+                if (gameModel.endGameCheck(startOrEnd)) {
+                    gameView.gameModel.randomNumbers = gameModel.randomNumbers
+                    println(gameView.gameModel.randomNumbers)
+                } else {
+                    break
+                }
             }
         }
     }
