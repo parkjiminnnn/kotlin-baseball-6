@@ -2,12 +2,12 @@ package baseball.model
 
 import camp.nextstep.edu.missionutils.Randoms
 
-class GameModel() {
+class GameModel {
     private var strikeCount = 0
     private var ballCount = 0
-    var randomNumbers = randomNumbers()
+    var randomNumbers = generateRandomNumbers()
 
-    private fun randomNumbers(): String {
+    fun generateRandomNumbers(): String {
         val stringBuilder = StringBuilder()
         while (stringBuilder.length < 3) {
             val randomNumber = Randoms.pickNumberInRange(1, 9)
