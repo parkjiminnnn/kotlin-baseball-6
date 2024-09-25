@@ -1,29 +1,38 @@
 package baseball.view
 
+import baseball.constants.Constants.BALL_MSG
+import baseball.constants.Constants.GAME_END_MSG
+import baseball.constants.Constants.GAME_START_MSG
+import baseball.constants.Constants.INPUT_NUMBER_MSG
+import baseball.constants.Constants.NOTHING_MSG
+import baseball.constants.Constants.START_OR_END
+import baseball.constants.Constants.STRIKE_MSG
+
+
 class GameView {
     var inputNumber = ""
 
     fun gameStartMsg() {
-        println("숫자야구 게임을 시작합니다.")
+        println(GAME_START_MSG)
     }
 
     fun inputValue(): String {
-        print("숫자를 입력해주세요:")
+        print(INPUT_NUMBER_MSG)
         inputNumber = readln()
         return inputNumber
     }
 
     fun gameEndMsg() {
-        println("3개의 숫자를 모두 맞히셨습니다! 게임 종료")
-        println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.")
+        println(GAME_END_MSG)
+        println(START_OR_END)
     }
 
     fun gameResult(strikeCount: Int, ballCount: Int) {
         when {
-            strikeCount != 0 && ballCount == 0 -> println("${strikeCount}스트라이크")
-            strikeCount == 0 && ballCount != 0 -> println("${ballCount}볼")
-            strikeCount != 0 && ballCount != 0 -> println("${ballCount}볼 ${strikeCount}스트라이크")
-            else -> println("낫싱")
+            strikeCount != 0 && ballCount == 0 -> println("$strikeCount$STRIKE_MSG")
+            strikeCount == 0 && ballCount != 0 -> println("$ballCount$BALL_MSG")
+            strikeCount != 0 && ballCount != 0 -> println("$ballCount$BALL_MSG $strikeCount$STRIKE_MSG")
+            else -> println(NOTHING_MSG)
         }
     }
 }
